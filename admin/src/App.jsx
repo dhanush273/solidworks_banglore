@@ -11,7 +11,7 @@ import { api } from './services/api';
 export default function App() {
   const [registrations,    setRegistrations]    = useState([]);
   const [stats,            setStats]            = useState(null);
-  const [loading,          setLoading]          = useState(true);
+  // const [loading,          setLoading]          = useState(true);
   const [search,           setSearch]           = useState('');
   const [statusFilter,     setStatusFilter]     = useState('All');
   const [roleFilter,       setRoleFilter]       = useState('All');

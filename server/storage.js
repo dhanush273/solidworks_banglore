@@ -48,7 +48,7 @@ export const defaultEventData = {
   agenda: [
     {
       id: "ag-1",
-      time: "10:00 AM – 10:03 AM",
+      time: "09:00 AM",
       title: " Opening Video",
       icon: "user",
       badgeColor: "bg-red-500"

@@ -1,0 +1,44 @@
+[
+  {
+    "_id": "reg_1791182900372_91vww",
+    "fullName": "Vipin George",
+    "workEmail": "vipin.george@lnttech.com",
+    "phoneNumber": "+91 94471 89012",
+    "companyName": "L&T Technology Services",
+    "jobRole": "Design Engineer",
+    "status": "Pending",
+    "emailSent": false,
+    "emailSentAt": null,
+    "attendedAt": null,
+    "qrCodeToken": "reg_1791182900372_91vww",
+    "createdAt": "2026-10-05T06:48:20.372Z"
+  },
+  {
+    "_id": "reg_1791182900363_t7u0i",
+    "fullName": "Ananya Deshmukh",
+    "workEmail": "ananya.d@mahindra.com",
+    "phoneNumber": "+91 97123 45678",
+    "companyName": "Mahindra R&D",
+    "jobRole": "R&D Manager / Lead",
+    "status": "Confirmed",
+    "emailSent": false,
+    "emailSentAt": null,
+    "attendedAt": null,
+    "qrCodeToken": "reg_1791182900363_t7u0i",
+    "createdAt": "2026-10-05T06:48:20.363Z"
+  },
+  {
+    "_id": "reg_1791182900348_517au",
+    "fullName": "Rahul Varma",
+    "workEmail": "rahul.varma@tcs.com",
+    "phoneNumber": "+91 98451 23456",
+    "companyName": "Tata Consultancy Services",
+    "jobRole": "CAD / Mechanical Engineer",
+    "status": "Confirmed",
+    "emailSent": false,
+    "emailSentAt": null,
+    "attendedAt": null,
+    "qrCodeToken": "reg_1791182900348_517au",
+    "createdAt": "2026-10-05T06:48:20.348Z"
+  }
+]
