@@ -154,7 +154,7 @@ class EmailService {
                   </td>
                   <td width="33%" align="center" style="padding:6px; border-right:1px solid rgba(255,255,255,0.15);">
                     <p style="margin:0; font-size:11px; text-transform:uppercase; color:#93c5fd; font-weight:700;">TIME</p>
-                    <p style="margin:4px 0 0 0; font-size:13px; font-weight:800; color:#ffffff;">10:00 AM – 05:30 PM</p>
+                    <p style="margin:4px 0 0 0; font-size:13px; font-weight:800; color:#ffffff;">09:00 AM – 05:30 PM</p>
                   </td>
                   <td width="33%" align="center" style="padding:6px;">
                     <p style="margin:0; font-size:11px; text-transform:uppercase; color:#93c5fd; font-weight:700;">VENUE</p>

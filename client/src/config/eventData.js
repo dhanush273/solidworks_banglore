@@ -14,7 +14,7 @@ export const defaultEventConfig = {
   },
   info: {
     dates: "November 5, 2026",
-    time: "10:00 AM – 05:30 PM",
+    time: "09:00 AM – 05:30 PM",
     venueName: "Taj Yeshwantpur, Bengaluru",
     venueAddress: " 2275, Tumkur Main Road, Yeshwanthpur Industrial Area, Phase 1, Yeswanthpur, Bengaluru, Karnataka 560022",
     mode: "In-Person Event"
