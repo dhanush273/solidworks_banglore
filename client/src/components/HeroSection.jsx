@@ -212,7 +212,7 @@ export default function HeroSection({ hero, onRegisterClick }) {
               src={getAssetUrl(heroImage || '/assets/robotic-arm.png')}
               alt="SOLIDWORKS 2027 AI Robotic Workcell"
               className="w-full max-w-[650px] lg:max-w-none lg:w-[115%] xl:w-[122%] lg:translate-x-16 xl:translate-x-24 h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.13)] transition-transform duration-500 hover:scale-105"
-              onError={(e) => handleImageFallback(e, 'http://localhost:5000/assets/robotic-arm.png')}
+              onError={(e) => handleImageFallback(e, 'https://solidworks-banglore.onrender.com/assets/robotic-arm.png')}
             />
           </div>
 

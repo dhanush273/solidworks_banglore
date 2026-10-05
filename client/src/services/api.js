@@ -1,4 +1,4 @@
-const RAW_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const RAW_URL = import.meta.env.VITE_API_URL || 'https://solidworks-banglore.onrender.com/api';
 const CLEAN_URL = RAW_URL.replace(/\/+$/, '');
 const BASE_URL = CLEAN_URL.endsWith('/api') ? CLEAN_URL : `${CLEAN_URL}/api`;
 

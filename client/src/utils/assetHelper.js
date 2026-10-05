@@ -1,4 +1,4 @@
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = 'https://solidworks-banglore.onrender.com';
 
 /**
  * Resolves an asset URL properly whether hosted on Vercel, Netlify, or Render.

@@ -65,7 +65,7 @@ function ExpectationItem({ item, index = 0 }) {
               onError={(e) => {
                 if (!e.currentTarget.dataset.triedBackend) {
                   e.currentTarget.dataset.triedBackend = 'true';
-                  e.currentTarget.src = `http://localhost:5000${item.icon}`;
+                  e.currentTarget.src = `https://solidworks-banglore.onrender.com${item.icon}`;
                 } else {
                   setImgError(true);
                 }
