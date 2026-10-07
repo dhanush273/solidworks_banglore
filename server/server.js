@@ -8,7 +8,7 @@ import { connectDB } from './db.js';
 import eventRoutes from './routes/eventRoutes.js';
 import registrationRoutes from './routes/registrationRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
-import { dataService } from './services/dataService.js';
+
 
 dotenv.config();
 
@@ -83,48 +83,11 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Seed initial sample registrations if empty
-async function seedInitialRegistrations() {
-  const existing = await dataService.getAllRegistrations();
-  if (existing.length === 0) {
-    const samples = [
-      {
-        fullName: 'Rahul Varma',
-        workEmail: 'rahul.varma@tcs.com',
-        phoneNumber: '+91 98451 23456',
-        companyName: 'Tata Consultancy Services',
-        jobRole: 'CAD / Mechanical Engineer',
-        status: 'Confirmed'
-      },
-      {
-        fullName: 'Ananya Deshmukh',
-        workEmail: 'ananya.d@mahindra.com',
-        phoneNumber: '+91 97123 45678',
-        companyName: 'Mahindra R&D',
-        jobRole: 'R&D Manager / Lead',
-        status: 'Confirmed'
-      },
-      {
-        fullName: 'Vipin George',
-        workEmail: 'vipin.george@lnttech.com',
-        phoneNumber: '+91 94471 89012',
-        companyName: 'L&T Technology Services',
-        jobRole: 'Design Engineer',
-        status: 'Pending'
-      }
-    ];
-
-    for (const sample of samples) {
-      await dataService.createRegistration(sample);
-    }
-    console.log('[Seed] Added sample nominations for demonstration.');
-  }
-}
 
 // Start Server
 async function startServer() {
   await connectDB();
-  await seedInitialRegistrations();
+ 
 
   app.listen(PORT, () => {
     console.log(`🚀 SOLIDWORKS Innovation Day API is running at http://localhost:${PORT}`);
