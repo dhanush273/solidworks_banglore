@@ -1,27 +1,29 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-dotenv.config();
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 let isConnectedToMongo = false;
 
 export async function connectDB() {
   const uri = process.env.MONGO_URI || process.env.MONGODB_URI;
   if (!uri) {
-    console.log('[Database] No MONGO_URI specified in environment. Using embedded persistent JSON storage.');
+    console.log('[Database] No MongoDB URI configured. Using local JSON storage.');
     return false;
   }
 
   try {
-    await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 3000
-    });
+    await mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 });
     isConnectedToMongo = true;
-    console.log('[Database] Successfully connected to MongoDB at:', uri);
+    console.log('[Database] Connected to MongoDB database:', mongoose.connection.name);
     return true;
-  } catch (err) {
-    console.warn('[Database] Could not connect to MongoDB:', err.message);
-    console.log('[Database] Gracefully falling back to local persistent storage. All data will be saved to disk.');
+  } catch (error) {
     isConnectedToMongo = false;
+    console.warn('[Database] MongoDB connection failed:', error.message);
+    console.log('[Database] Continuing with local JSON storage.');
     return false;
   }
 }
