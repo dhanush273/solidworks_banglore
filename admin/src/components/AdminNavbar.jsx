@@ -16,7 +16,7 @@ export default function AdminNavbar({ loading, onRefresh, onOpenBulkEmail, admin
             </span>
             <span className="text-brand-red font-extrabold">2026</span>
             <span className="ml-2 text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
-              Admin Portal
+              Admin Portal - 2026
             </span>
           </div>
         </div>
