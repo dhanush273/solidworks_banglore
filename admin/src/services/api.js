@@ -1,12 +1,5 @@
-const getDefaultApiUrl = () => {
-  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
-  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-    return '/api';
-  }
-  return 'https://solidworks-banglore.onrender.com/api';
-};
-
-const RAW_URL = getDefaultApiUrl();
+const BACKEND_URL = 'https://solidworks-banglore.onrender.com';
+const RAW_URL = import.meta.env.VITE_API_URL || `${BACKEND_URL}/api`;
 const CLEAN_URL = RAW_URL.replace(/\/+$/, '');
 const BASE = CLEAN_URL.endsWith('/api') ? CLEAN_URL : `${CLEAN_URL}/api`;
 
