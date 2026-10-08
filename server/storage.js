@@ -180,7 +180,7 @@ export const defaultEventData = {
      {
       id: "sp-5",
       name: "Mahendra H",
-      designation: "PSr. Partner Sales Manager, Dassault Systemes",
+      designation: "Product Manager, Simulation Solutions",
       photoUrl: "/people/mahendra-h.jpg"
     },
     {
