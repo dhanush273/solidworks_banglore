@@ -1,8 +1,8 @@
 import React from 'react';
-import { Download, RefreshCw, Mail } from 'lucide-react';
+import { Download, RefreshCw, Mail, User } from 'lucide-react';
 import { api } from '../services/api';
 
-export default function AdminNavbar({ loading, onRefresh, onOpenBulkEmail }) {
+export default function AdminNavbar({ loading, onRefresh, onOpenBulkEmail, adminName, onChangeAdmin }) {
   return (
     <header className="bg-slate-900 text-white sticky top-0 z-40 border-b border-slate-800 shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
@@ -23,6 +23,17 @@ export default function AdminNavbar({ loading, onRefresh, onOpenBulkEmail }) {
 
         {/* Actions */}
         <div className="flex items-center gap-2.5">
+          {adminName && (
+            <button
+              onClick={onChangeAdmin}
+              title="Click to change your admin name (used in audit trail when deleting or updating)"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold border border-slate-700 transition-colors"
+            >
+              <User className="w-3.5 h-3.5 text-slate-400" />
+              <span>Admin: <strong className="text-white">{adminName}</strong></span>
+            </button>
+          )}
+
           <button
             onClick={onOpenBulkEmail}
             className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold tracking-wide shadow-md transition-all hover:scale-[1.02]"

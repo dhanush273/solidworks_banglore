@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Mail, CheckCircle2, QrCode, ExternalLink, Copy, Check, Clock, UserCheck } from 'lucide-react';
+import { X, Mail, CheckCircle2, QrCode, ExternalLink, Copy, Check, Clock, UserCheck, Trash2 } from 'lucide-react';
 import { api } from '../services/api';
 
 const STATUS_COLOR = {
@@ -9,7 +9,7 @@ const STATUS_COLOR = {
   Cancelled: 'text-rose-600',
 };
 
-export default function AttendeeModal({ attendee, onClose, onSendEmail, onPreviewEmail, onCheckin }) {
+export default function AttendeeModal({ attendee, onClose, onSendEmail, onPreviewEmail, onCheckin, onDelete }) {
   if (!attendee) return null;
   const id = attendee._id || attendee.id;
   const checkinUrl = api.getCheckinUrl(id);
@@ -186,6 +186,20 @@ export default function AttendeeModal({ attendee, onClose, onSendEmail, onPrevie
                 className="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-colors"
               >
                 Mark Attended
+              </button>
+            )}
+
+            {onDelete && (
+              <button
+                onClick={() => {
+                  onDelete(id, attendee.fullName);
+                  onClose();
+                }}
+                className="px-3 py-2 rounded-xl text-rose-600 hover:bg-rose-50 border border-rose-200 font-bold text-xs transition-colors flex items-center gap-1.5"
+                title="Remove nomination from UI (preserves in DB)"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete</span>
               </button>
             )}
           </div>

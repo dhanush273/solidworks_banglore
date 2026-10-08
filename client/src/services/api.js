@@ -1,4 +1,12 @@
-const RAW_URL = import.meta.env.VITE_API_URL || 'https://solidworks-banglore.onrender.com/api';
+const getDefaultApiUrl = () => {
+  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return '/api';
+  }
+  return 'https://solidworks-banglore.onrender.com/api';
+};
+
+const RAW_URL = getDefaultApiUrl();
 const CLEAN_URL = RAW_URL.replace(/\/+$/, '');
 const BASE_URL = CLEAN_URL.endsWith('/api') ? CLEAN_URL : `${CLEAN_URL}/api`;
 
@@ -66,8 +74,15 @@ export const api = {
     return res.json();
   },
 
-  async deleteRegistration(id) {
-    const res = await fetch(`${BASE_URL}/registrations/${id}`, { method: 'DELETE' });
+  async deleteRegistration(id, deletedBy = 'Admin') {
+    const res = await fetch(`${BASE_URL}/registrations/${id}?deletedBy=${encodeURIComponent(deletedBy)}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-admin-user': deletedBy
+      },
+      body: JSON.stringify({ deletedBy })
+    });
     if (!res.ok) throw new Error('Failed to delete nomination');
     return res.json();
   },

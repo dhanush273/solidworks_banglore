@@ -58,8 +58,10 @@ router.post('/', async (req, res) => {
 // GET /api/registrations - List with search, filter, pagination
 router.get('/', async (req, res) => {
   try {
-    const { search = '', status = '', role = '' } = req.query;
-    let registrations = await dataService.getAllRegistrations();
+    const { search = '', status = '', role = '', includeDeleted = 'false' } = req.query;
+    let registrations = await dataService.getAllRegistrations({
+      includeDeleted: includeDeleted === 'true'
+    });
 
     if (search) {
       const q = search.toLowerCase();
@@ -160,15 +162,25 @@ router.patch('/:id/status', async (req, res) => {
   }
 });
 
-// DELETE /api/registrations/:id - Delete nomination
+// DELETE /api/registrations/:id - Soft delete nomination with audit trail
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const success = await dataService.deleteRegistration(id);
+    const deletedBy =
+      (req.body && req.body.deletedBy) ||
+      req.query.deletedBy ||
+      req.headers['x-admin-user'] ||
+      'Admin';
+
+    const success = await dataService.deleteRegistration(id, deletedBy);
     if (!success) {
       return res.status(404).json({ success: false, message: 'Registration not found' });
     }
-    res.json({ success: true, message: 'Registration deleted successfully' });
+    res.json({
+      success: true,
+      message: 'Registration deleted from UI (preserved in database)',
+      deletedBy
+    });
   } catch (err) {
     console.error('Delete error:', err);
     res.status(500).json({ success: false, message: 'Failed to delete registration' });

@@ -152,9 +152,9 @@ export default function NominationsTable({
                       View
                     </button>
                     <button
-                      onClick={() => onDelete(id)}
+                      onClick={() => onDelete(id, reg.fullName)}
                       className="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors inline-flex items-center"
-                      title="Delete"
+                      title="Delete from list (preserves in DB)"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>

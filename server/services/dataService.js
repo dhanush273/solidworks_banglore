@@ -47,16 +47,17 @@ export const dataService = {
     return localStore.addRegistration(regData);
   },
 
-  async getAllRegistrations() {
+  async getAllRegistrations(options = {}) {
     if (isMongoActive()) {
       try {
-        const records = await Registration.find().sort({ createdAt: -1 }).lean();
+        const filter = options.includeDeleted ? {} : { isDeleted: { $ne: true } };
+        const records = await Registration.find(filter).sort({ createdAt: -1 }).lean();
         return records;
       } catch (err) {
         console.error('MongoDB getAllRegistrations error, falling back:', err.message);
       }
     }
-    return localStore.getRegistrations();
+    return localStore.getRegistrations(options);
   },
 
   async updateRegistrationStatus(id, status) {
@@ -71,15 +72,16 @@ export const dataService = {
     return localStore.updateRegistrationStatus(id, status);
   },
 
-  async getRegistrationById(id) {
+  async getRegistrationById(id, options = {}) {
     if (isMongoActive()) {
       try {
         let record = null;
+        const filter = options.includeDeleted ? {} : { isDeleted: { $ne: true } };
         if (id.match(/^[0-9a-fA-F]{24}$/)) {
-          record = await Registration.findById(id).lean();
+          record = await Registration.findOne({ _id: id, ...filter }).lean();
         }
         if (!record) {
-          record = await Registration.findOne({ qrCodeToken: id }).lean();
+          record = await Registration.findOne({ qrCodeToken: id, ...filter }).lean();
         }
         if (record) return record;
       } catch (err) {
@@ -122,20 +124,25 @@ export const dataService = {
     });
   },
 
-  async deleteRegistration(id) {
+  async deleteRegistration(id, deletedBy = 'Admin') {
+    const update = {
+      isDeleted: true,
+      deletedAt: new Date(),
+      deletedBy: deletedBy || 'Admin'
+    };
     if (isMongoActive()) {
       try {
         let res = null;
         if (id.match(/^[0-9a-fA-F]{24}$/)) {
-          res = await Registration.findByIdAndDelete(id);
+          res = await Registration.findByIdAndUpdate(id, update, { new: true });
         } else {
-          res = await Registration.findOneAndDelete({ qrCodeToken: id });
+          res = await Registration.findOneAndUpdate({ qrCodeToken: id }, update, { new: true });
         }
         return !!res;
       } catch (err) {
         console.error('MongoDB deleteRegistration error, falling back:', err.message);
       }
     }
-    return localStore.deleteRegistration(id);
+    return localStore.deleteRegistration(id, deletedBy);
   }
 };

@@ -7,15 +7,15 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'https://solidworks-banglore.onrender.com',
+        target: process.env.VITE_BACKEND_URL || 'http://localhost:5000',
         changeOrigin: true
       },
       '/uploads': {
-        target: 'https://solidworks-banglore.onrender.com',
+        target: process.env.VITE_BACKEND_URL || 'http://localhost:5000',
         changeOrigin: true
       },
       '/assets': {
-        target: 'https://solidworks-banglore.onrender.com',
+        target: process.env.VITE_BACKEND_URL || 'http://localhost:5000',
         changeOrigin: true
       }
     }

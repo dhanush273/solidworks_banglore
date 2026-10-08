@@ -20,6 +20,16 @@ export default function App() {
   const [selectedAttendee, setSelectedAttendee] = useState(null);
   const [previewAttendee,  setPreviewAttendee]  = useState(null);
   const [isBulkEmailOpen,  setIsBulkEmailOpen]  = useState(false);
+  const [adminName,        setAdminName]        = useState(() => localStorage.getItem('solidworks_admin_name') || 'Admin');
+
+  const handleChangeAdmin = () => {
+    const entered = window.prompt('Enter your Admin name/email for audit log:', adminName);
+    if (entered !== null && entered.trim()) {
+      const trimmed = entered.trim();
+      setAdminName(trimmed);
+      localStorage.setItem('solidworks_admin_name', trimmed);
+    }
+  };
 
   /* ── Load data ── */
   const loadData = async () => {
@@ -83,12 +93,24 @@ export default function App() {
     }
   };
 
-  /* ── Delete ── */
-  const handleDelete = async (id) => {
-    if (!window.confirm('Remove this nomination permanently?')) return;
+  /* ── Soft Delete (Hidden from UI, retained in DB with who deleted) ── */
+  const handleDelete = async (id, candidateName) => {
+    const defaultOperator = adminName || 'Admin';
+    const enteredOperator = window.prompt(
+      `Remove "${candidateName || 'this registration'}" from UI?\n\nThe record will be preserved in the database for audit.\nEnter who is deleting:`,
+      defaultOperator
+    );
+    if (enteredOperator === null) return; // User cancelled
+    const operator = enteredOperator.trim() || defaultOperator;
+    setAdminName(operator);
+    localStorage.setItem('solidworks_admin_name', operator);
+
     try {
-      await api.deleteRegistration(id);
+      await api.deleteRegistration(id, operator);
       setRegistrations(prev => prev.filter(r => r._id !== id && r.id !== id));
+      if (selectedAttendee && (selectedAttendee._id === id || selectedAttendee.id === id)) {
+        setSelectedAttendee(null);
+      }
       const s = await api.getStats();
       setStats(s.stats);
     } catch (err) { alert('Delete failed: ' + err.message); }
@@ -101,6 +123,8 @@ export default function App() {
         loading={loading}
         onRefresh={loadData}
         onOpenBulkEmail={() => setIsBulkEmailOpen(true)}
+        adminName={adminName}
+        onChangeAdmin={handleChangeAdmin}
       />
 
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1 space-y-6">
@@ -131,6 +155,7 @@ export default function App() {
         onSendEmail={handleSendSingleEmail}
         onPreviewEmail={setPreviewAttendee}
         onCheckin={handleCheckin}
+        onDelete={handleDelete}
       />
 
       {/* Bulk Email Modal */}

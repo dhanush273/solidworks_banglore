@@ -37,8 +37,15 @@ export const api = {
     return res.json();
   },
 
-  async deleteRegistration(id) {
-    const res = await fetch(`${BASE}/registrations/${id}`, { method: 'DELETE' });
+  async deleteRegistration(id, deletedBy = 'Admin') {
+    const res = await fetch(`${BASE}/registrations/${id}?deletedBy=${encodeURIComponent(deletedBy)}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-admin-user': deletedBy
+      },
+      body: JSON.stringify({ deletedBy })
+    });
     if (!res.ok) throw new Error('Failed to delete registration');
     return res.json();
   },

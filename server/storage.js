@@ -302,13 +302,14 @@ export const localStore = {
     writeJSON(EVENT_FILE, data);
     return data;
   },
-  getRegistrations() {
+  getRegistrations(options = {}) {
     const list = readJSON(REGISTRATIONS_FILE, []);
-    return list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const filtered = options.includeDeleted ? list : list.filter(r => !r.isDeleted);
+    return filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   },
   getRegistrationById(id) {
     const list = readJSON(REGISTRATIONS_FILE, []);
-    return list.find(r => r._id === id || r.id === id || r.qrCodeToken === id) || null;
+    return list.find(r => (r._id === id || r.id === id || r.qrCodeToken === id) && !r.isDeleted) || null;
   },
   addRegistration(record) {
     const list = readJSON(REGISTRATIONS_FILE, []);
@@ -321,6 +322,9 @@ export const localStore = {
       emailSentAt: record.emailSentAt || null,
       attendedAt: record.attendedAt || null,
       qrCodeToken: record.qrCodeToken || id,
+      isDeleted: false,
+      deletedAt: null,
+      deletedBy: null,
       createdAt: new Date().toISOString()
     };
     list.unshift(newRecord);
@@ -350,11 +354,16 @@ export const localStore = {
     }
     return null;
   },
-  deleteRegistration(id) {
-    let list = readJSON(REGISTRATIONS_FILE, []);
-    const initialLen = list.length;
-    list = list.filter(r => r._id !== id && r.id !== id && r.qrCodeToken !== id);
-    writeJSON(REGISTRATIONS_FILE, list);
-    return list.length < initialLen;
+  deleteRegistration(id, deletedBy = 'Admin') {
+    const list = readJSON(REGISTRATIONS_FILE, []);
+    const index = list.findIndex(r => r._id === id || r.id === id || r.qrCodeToken === id);
+    if (index !== -1) {
+      list[index].isDeleted = true;
+      list[index].deletedAt = new Date().toISOString();
+      list[index].deletedBy = deletedBy || 'Admin';
+      writeJSON(REGISTRATIONS_FILE, list);
+      return true;
+    }
+    return false;
   }
 };

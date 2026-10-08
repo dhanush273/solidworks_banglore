@@ -57,6 +57,19 @@ const RegistrationSchema = new mongoose.Schema(
     notes: {
       type: String,
       default: ''
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+      index: true
+    },
+    deletedAt: {
+      type: Date,
+      default: null
+    },
+    deletedBy: {
+      type: String,
+      default: null
     }
   },
   {

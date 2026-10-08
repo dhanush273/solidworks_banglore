@@ -129,7 +129,7 @@ class EmailService {
                       📲 Scan this QR code upon arrival to instantly mark your attendance!
                     </p>
                     <p style="margin:0 0 18px 0; font-size:12px; color:#64748b; line-height:1.5; max-width:440px;">
-                      Present this badge at the reception desk at Hablis Hotel, or scan it with your smartphone camera to self-verify your check-in.
+                      Present this badge at the reception desk at Taj Yeshwantpur, Bengaluru, or scan it with your smartphone camera to self-verify your check-in.
                     </p>
 
                     <!-- Direct Check-in / View Pass CTA -->
@@ -164,7 +164,7 @@ class EmailService {
               </table>
 
               <div style="margin-top:14px; text-align:center;">
-                <a href="https://maps.app.goo.gl/mUu2i567Ca8FwLG78" target="_blank" style="color:#0284c7; font-size:12px; font-weight:700; text-decoration:none;">
+                <a href="https://maps.app.goo.gl/Cz3v7Vz3eQxamHB16" target="_blank" style="color:#0284c7; font-size:12px; font-weight:700; text-decoration:none;">
                   📍 View Location on Google Maps &rarr;
                 </a>
               </div>
